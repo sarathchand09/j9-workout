@@ -8,5 +8,6 @@ public class J9WorkoutApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(J9WorkoutApplication.class, args);
+		System.out.println("welcome to spring boot...");
 	}
 }
