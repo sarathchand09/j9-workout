@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-
 public class Employee {
 
     @Id

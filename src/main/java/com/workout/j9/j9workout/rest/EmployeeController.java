@@ -1,5 +1,6 @@
 package com.workout.j9.j9workout.rest;
 
+import com.workout.j9.j9workout.business.PersistEmployee;
 import com.workout.j9.j9workout.entity.Employee;
 import com.workout.j9.j9workout.entity.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.util.function.Consumer;
 
 @RestController
 public class EmployeeController {
@@ -20,9 +22,19 @@ public class EmployeeController {
 
     @PostConstruct
     public void init() {
-        employeeRepo.save(new Employee(1L, "gonacalves", "johny", 22, false));
-        employeeRepo.save(new Employee(2L, "rehman", "bullet", 25, true));
-        employeeRepo.save(new Employee(3L, "goku", "kakarot", 24, true));
+
+        PersistEmployee persistEmployee = (id, firstName, lastName, age, isDev) ->
+                employeeRepo.save(new Employee(id, firstName, lastName, age, isDev));
+
+        persistEmployee.saveEmployee(1L, "gonacalves", "johny", 22, false);
+        persistEmployee.saveEmployee(2L, "rehman", "bullet", 25, true);
+        persistEmployee.saveEmployee(3L, "goku", "kakarot", 24, true);
+
+
+       /* Consumer<Employee> consumerEmployee = (employee) -> employeeRepo.save(employee);
+        consumerEmployee.accept(new Employee(1L, "gonacalves", "johny", 22, false));
+        consumerEmployee.accept(new Employee(2L, "rehman", "bullet", 25, true));
+        consumerEmployee.accept(new Employee(3L, "goku", "kakarot", 24, true));*/
 
         employeeRepo.findAll().forEach(System.out::println);
     }
